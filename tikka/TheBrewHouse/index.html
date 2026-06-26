@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Brew House | UK Café</title>
+    <meta name="description" content="A cozy neighbourhood café since 2018. Freshly brewed coffee, homemade pastries & a warm corner just for you — in the heart of London.">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-brown: #3e2723;
+            --color-cream: #fdfbf7;
+            --color-gold: #c6a87c;
+            --color-text: #4a4a4a;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Lato', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-cream);
+            color: var(--color-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            color: var(--color-brown);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(253, 251, 247, 0.95);
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 1rem 5%;
+            background-color: var(--color-cream);
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-brown);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-gold);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--color-brown);
+            transition: all 0.3s ease;
+        }
+
+        /* Hero */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            background: linear-gradient(rgba(62, 39, 35, 0.7), rgba(62, 39, 35, 0.7)), url('https://images.unsplash.com/photo-1497935586351-b67a49e012bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: var(--color-cream);
+            margin-top: 0;
+        }
+
+        .hero h1 {
+            color: var(--color-cream);
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.3s backwards;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--color-gold);
+            color: var(--color-brown);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            animation: fadeInUp 1s ease 0.6s backwards;
+        }
+
+        .btn:hover {
+            background-color: #b59565;
+            transform: translateY(-3px);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background-color: var(--color-gold);
+            margin: 15px auto 0;
+        }
+
+        /* About */
+        .about {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--color-gold);
+            font-family: var(--font-body);
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .about p {
+            font-size: 1.1rem;
+        }
+
+        /* Menu */
+        .menu-bg {
+            background-color: #f7f3ec;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .menu-card {
+            background: var(--color-cream);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(62, 39, 35, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            border-bottom: 3px solid var(--color-gold);
+            box-shadow: 0 15px 40px rgba(62, 39, 35, 0.1);
+        }
+
+        .menu-item-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--color-brown);
+        }
+
+        .menu-item-price {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            color: var(--color-gold);
+            font-weight: 600;
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            height: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #d4ba98, #a8875b);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(62, 39, 35, 0.4);
+            transition: background 0.3s ease;
+        }
+
+        .gallery-item:hover::before {
+            background: rgba(62, 39, 35, 0.2);
+        }
+
+        .gallery-label {
+            position: relative;
+            color: var(--color-cream);
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 600;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-label {
+            transform: scale(1.1);
+        }
+
+        /* Visit Us */
+        .visit {
+            background-color: var(--color-brown);
+            color: var(--color-cream);
+        }
+
+        .visit .section-title {
+            color: var(--color-cream);
+        }
+
+        .visit-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .visit-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .visit-info h4 {
+            color: var(--color-gold);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .visit-info p {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .map-placeholder {
+            flex: 1;
+            min-width: 300px;
+            height: 300px;
+            background-color: #5d4037;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(253, 251, 247, 0.5);
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            border: 1px solid var(--color-gold);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2d1c19;
+            color: #a09e9a;
+            text-align: center;
+            padding: 2rem 5%;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+
+        .footer-heart {
+            color: var(--color-gold);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: -100%;
+                width: 100%;
+                background-color: var(--color-cream);
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 0;
+                box-shadow: 0 10px 10px rgba(0,0,0,0.05);
+                transition: left 0.3s ease;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .visit-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="logo">The Brew House</div>
+        <div class="nav-links" id="navLinks">
+            <a href="#menu">Menu</a>
+            <a href="#about">About</a>
+            <a href="#visit">Visit Us</a>
+        </div>
+        <div class="hamburger" id="hamburger" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Where Every Cup Tells a Story</h1>
+        <p>Freshly brewed coffee, homemade pastries & a warm corner just for you — in the heart of London.</p>
+        <a href="#menu" class="btn">See Our Menu</a>
+    </section>
+
+    <section class="about" id="about">
+        <h2 class="section-title">About Us</h2>
+        <h3>"A cozy neighbourhood café since 2018"</h3>
+        <p>At The Brew House, we believe in the simple joy of a perfect cup. We serve handcrafted coffee using ethically and locally sourced beans, paired with freshly baked goods made daily. Whether you're here to work, catch up with friends, or simply enjoy a quiet moment, our warm atmosphere is designed to feel just like home.</p>
+    </section>
+
+    <section class="menu-bg" id="menu">
+        <h2 class="section-title">Our Menu</h2>
+        <div class="menu-grid">
+            <div class="menu-card">
+                <span class="menu-item-name">Espresso</span>
+                <span class="menu-item-price">£2.50</span>
+            </div>
+            <div class="menu-card">
+                <span class="menu-item-name">Cappuccino</span>
+                <span class="menu-item-price">£3.20</span>
+            </div>
+            <div class="menu-card">
+                <span class="menu-item-name">Flat White</span>
+                <span class="menu-item-price">£3.00</span>
+            </div>
+            <div class="menu-card">
+                <span class="menu-item-name">Croissant</span>
+                <span class="menu-item-price">£2.80</span>
+            </div>
+            <div class="menu-card">
+                <span class="menu-item-name">Avocado Toast</span>
+                <span class="menu-item-price">£6.50</span>
+            </div>
+            <div class="menu-card">
+                <span class="menu-item-name">Blueberry Muffin</span>
+                <span class="menu-item-price">£2.50</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="gallery">
+        <h2 class="section-title">Moments</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item" style="background: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover;">
+                <span class="gallery-label">Our Space</span>
+            </div>
+            <div class="gallery-item" style="background: url('https://images.unsplash.com/photo-1511920170033-f8396924c348?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover;">
+                <span class="gallery-label">The Coffee</span>
+            </div>
+            <div class="gallery-item" style="background: url('https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover;">
+                <span class="gallery-label">Fresh Bakes</span>
+            </div>
+            <div class="gallery-item" style="background: url('https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover;">
+                <span class="gallery-label">Morning Vibes</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="visit" id="visit">
+        <h2 class="section-title">Visit Us</h2>
+        <div class="visit-container">
+            <div class="visit-info">
+                <h4>Location</h4>
+                <p>14 Blossom Lane, Notting Hill</p>
+                <p>London W11 2JJ</p>
+                
+                <h4>Hours</h4>
+                <p>Mon–Fri: 7am–6pm</p>
+                <p>Sat–Sun: 8am–5pm</p>
+                
+                <h4>Contact</h4>
+                <p>+44 20 7946 0123</p>
+            </div>
+            <div class="map-placeholder" style="background: url('https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover; color: transparent;">
+                Google Maps Embed Placeholder
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 The Brew House &middot; London</p>
+        <p>Crafted with <span class="footer-heart">&hearts;</span></p>
+    </footer>
+
+    <script>
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const links = navLinks.querySelectorAll('a');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            
+            // Hamburger animation
+            const spans = hamburger.querySelectorAll('span');
+            if(navLinks.classList.contains('active')){
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+
+        // Close menu on link click
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const spans = hamburger.querySelectorAll('span');
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            });
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

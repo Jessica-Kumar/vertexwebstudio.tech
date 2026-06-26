@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitLife Studio | US Fitness</title>
+    <meta name="description" content="Premium fitness classes, personal training & a community that pushes you further — Los Angeles, CA.">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-black: #0f0f0f;
+            --color-orange: #ff5e00;
+            --color-white: #ffffff;
+            --color-dark-grey: #1c1c1c;
+            --font-heading: 'Bebas Neue', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-black);
+            color: var(--color-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .logo {
+            font-family: var(--font-heading);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(15, 15, 15, 0.95);
+            z-index: 1000;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 1rem 5%;
+            border-bottom: 2px solid var(--color-orange);
+            background-color: var(--color-black);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            color: var(--color-orange);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-orange);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 30px;
+            height: 3px;
+            background-color: var(--color-white);
+            transition: all 0.3s ease;
+        }
+
+        /* Hero */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            background: linear-gradient(90deg, rgba(15, 15, 15, 0.9) 0%, rgba(15, 15, 15, 0.4) 100%), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            position: relative;
+            margin-top: 0;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 6rem;
+            line-height: 0.9;
+            margin-bottom: 1rem;
+            color: var(--color-white);
+            animation: slideRight 0.8s ease-out;
+        }
+
+        .hero h1 span {
+            color: var(--color-orange);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            color: #d0d0d0;
+            animation: slideRight 0.8s ease-out 0.2s backwards;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            animation: slideRight 0.8s ease-out 0.4s backwards;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--color-orange);
+            color: var(--color-black);
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+        }
+
+        .btn-primary:hover {
+            background-color: #ff7b33;
+            transform: scale(1.05);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--color-white);
+            border: 2px solid var(--color-white);
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--color-white);
+            color: var(--color-black);
+            transform: scale(1.05);
+        }
+
+        /* Sections */
+        section {
+            padding: 6rem 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 4rem;
+            margin-bottom: 3rem;
+            color: var(--color-white);
+        }
+
+        .section-title span {
+            color: var(--color-orange);
+        }
+
+        /* Classes */
+        .classes-bg {
+            background-color: var(--color-dark-grey);
+        }
+
+        .classes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .class-card {
+            background-color: var(--color-black);
+            padding: 2rem;
+            border-left: 5px solid var(--color-orange);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .class-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(255, 94, 0, 0.2);
+        }
+
+        .class-title {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .class-time {
+            color: #a0a0a0;
+            font-weight: 600;
+        }
+
+        /* Trainers */
+        .trainers-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .trainer-card {
+            text-align: center;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .trainer-avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, #3a3a3a, #1a1a1a);
+            border: 4px solid var(--color-orange);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .trainer-card:hover .trainer-avatar {
+            transform: scale(1.05);
+        }
+
+        /* Diagonal lines inside avatar placeholder */
+        .trainer-avatar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.05) 10px, rgba(255,255,255,0.05) 20px);
+        }
+
+        .trainer-name {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .trainer-specialty {
+            color: #a0a0a0;
+            font-size: 0.95rem;
+        }
+
+        /* Pricing */
+        .pricing-bg {
+            background-color: var(--color-dark-grey);
+            background-image: radial-gradient(circle at center, #2a2a2a 0%, #1c1c1c 100%);
+        }
+
+        .pricing-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .price-card {
+            background-color: var(--color-black);
+            padding: 3rem 2rem;
+            width: 100%;
+            max-width: 320px;
+            text-align: center;
+            border: 1px solid #333;
+            transition: transform 0.3s ease;
+        }
+
+        .price-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .price-card.highlight {
+            border: 2px solid var(--color-orange);
+            transform: scale(1.05);
+            background-color: #111;
+            box-shadow: 0 0 40px rgba(255, 94, 0, 0.15);
+        }
+
+        .price-card.highlight:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .tier {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight .tier {
+            color: var(--color-orange);
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #888;
+        }
+
+        .features {
+            color: #d0d0d0;
+            margin-bottom: 2rem;
+        }
+
+        .btn-full {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #333;
+            color: var(--color-white);
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .highlight .btn-full {
+            background-color: var(--color-orange);
+            color: var(--color-black);
+        }
+
+        .price-card:hover .btn-full:not(.highlight .btn-full) {
+            background-color: #555;
+        }
+
+        /* Contact */
+        .contact {
+            text-align: center;
+            background-color: var(--color-black);
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 3rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .info-block {
+            flex: 1;
+            min-width: 250px;
+            padding: 2rem;
+            background-color: var(--color-dark-grey);
+            border-bottom: 3px solid var(--color-orange);
+        }
+
+        .info-block h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--color-orange);
+        }
+
+        .info-block p {
+            color: #d0d0d0;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #050505;
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid #222;
+        }
+
+        .footer-motto {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .footer-copy {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes slideRight {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: rgba(15, 15, 15, 0.98);
+                flex-direction: column;
+                text-align: center;
+                padding: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.4s ease;
+                border-bottom: 0 solid var(--color-orange);
+            }
+
+            .nav-links.active {
+                max-height: 300px;
+                padding: 1.5rem 0;
+                border-bottom: 2px solid var(--color-orange);
+            }
+
+            .hero h1 {
+                font-size: 4rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .price-card.highlight {
+                transform: scale(1);
+            }
+
+            .price-card.highlight:hover {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="logo">FitLife Studio</div>
+        <div class="nav-links" id="navLinks">
+            <a href="#classes">Classes</a>
+            <a href="#trainers">Trainers</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Train Hard. <br><span>Live Strong.</span></h1>
+            <p>Premium fitness classes, personal training & a community that pushes you further — Los Angeles, CA</p>
+            <div class="hero-buttons">
+                <a href="#classes" class="btn btn-primary">View Classes</a>
+                <a href="#pricing" class="btn btn-secondary">Free Trial Class</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="classes-bg" id="classes">
+        <h2 class="section-title">Our <span>Classes</span></h2>
+        <div class="classes-grid">
+            <div class="class-card">
+                <div class="class-title">HIIT Training</div>
+                <div class="class-time">Mon/Wed/Fri 6am & 7pm</div>
+            </div>
+            <div class="class-card">
+                <div class="class-title">Yoga Flow</div>
+                <div class="class-time">Tue/Thu 8am & 6pm</div>
+            </div>
+            <div class="class-card">
+                <div class="class-title">Strength & Cond.</div>
+                <div class="class-time">Mon–Fri 5pm</div>
+            </div>
+            <div class="class-card">
+                <div class="class-title">Spin Cycle</div>
+                <div class="class-time">Sat/Sun 9am</div>
+            </div>
+            <div class="class-card">
+                <div class="class-title">Boxing Basics</div>
+                <div class="class-time">Wed/Fri 7pm</div>
+            </div>
+            <div class="class-card">
+                <div class="class-title">Pilates Core</div>
+                <div class="class-time">Tue/Thu 7am</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="trainers">
+        <h2 class="section-title">Expert <span>Trainers</span></h2>
+        <div class="trainers-grid">
+            <div class="trainer-card">
+                <div class="trainer-avatar" style="background: url('https://images.unsplash.com/photo-1567013127542-490d757e51fc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover;"></div>
+                <div class="trainer-name">Coach Mike</div>
+                <div class="trainer-specialty">Strength & HIIT specialist, 8 years exp</div>
+            </div>
+            <div class="trainer-card">
+                <div class="trainer-avatar" style="background: url('https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover;"></div>
+                <div class="trainer-name">Coach Sarah</div>
+                <div class="trainer-specialty">Yoga & Pilates certified, 6 years exp</div>
+            </div>
+            <div class="trainer-card">
+                <div class="trainer-avatar" style="background: url('https://images.unsplash.com/photo-1583465575605-649e7b23da56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover;"></div>
+                <div class="trainer-name">Coach David</div>
+                <div class="trainer-specialty">Boxing & Cardio expert, 5 years exp</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing-bg" id="pricing">
+        <h2 class="section-title">Choose Your <span>Plan</span></h2>
+        <div class="pricing-grid">
+            <div class="price-card">
+                <div class="tier">Basic</div>
+                <div class="price">$49<span>/mo</span></div>
+                <div class="features">2 classes/week</div>
+                <a href="#" class="btn btn-full">Join Now</a>
+            </div>
+            <div class="price-card highlight">
+                <div class="tier">Pro</div>
+                <div class="price">$89<span>/mo</span></div>
+                <div class="features">Unlimited classes</div>
+                <a href="#" class="btn btn-full">Join Now</a>
+            </div>
+            <div class="price-card">
+                <div class="tier">Elite</div>
+                <div class="price">$129<span>/mo</span></div>
+                <div class="features">Unlimited + Personal training</div>
+                <a href="#" class="btn btn-full">Join Now</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <h2 class="section-title">Find <span>Us</span></h2>
+        <div class="contact-info">
+            <div class="info-block">
+                <h3>Location</h3>
+                <p>88 Sunset Blvd</p>
+                <p>West Hollywood, CA 90028</p>
+            </div>
+            <div class="info-block">
+                <h3>Contact</h3>
+                <p>+1 (310) 555-0187</p>
+                <p>hello@fitlifestudio.com</p>
+            </div>
+            <div class="info-block">
+                <h3>Hours</h3>
+                <p>Mon–Fri: 5am–10pm</p>
+                <p>Sat–Sun: 7am–8pm</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-motto">No excuses. Just results.</div>
+        <div class="footer-copy">&copy; 2024 FitLife Studio &middot; Los Angeles</div>
+    </footer>
+
+    <script>
+        // Navbar Scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const links = navLinks.querySelectorAll('a');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            
+            // Animation
+            const spans = hamburger.querySelectorAll('span');
+            if(navLinks.classList.contains('active')){
+                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+
+        // Close menu on link click
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const spans = hamburger.querySelectorAll('span');
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if(this.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
